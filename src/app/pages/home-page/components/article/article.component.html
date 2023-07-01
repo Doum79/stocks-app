@@ -1,0 +1,53 @@
+<div class="card h-100">
+  <div class="card-body">
+    <h5 class="card-title">{{ article.name }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ article.reference }}</h6>
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+      <span *ngIf="article.name.length % 2 === 0"
+        >quick example text to build on the card title and make up the bulk of
+        the card's content.</span
+      >
+    </p>
+
+    <!-- <a [routerLink]="['/articles', article.reference]" class="stretched-link"></a> -->
+  </div>
+
+  <div class="bg-light p-2" *ngIf="showBasket">
+    <div class="d-flex flex-row ps-2 pe-2">
+      <button class="btn btn-sm btn-secondary" (click)="decreaseQuantity()">
+        -
+      </button>
+      <div class="ms-1 me-2 flex-grow-1 text-center">
+        {{ basketItem.quantity || 0 }}
+      </div>
+      <button class="btn btn-sm btn-secondary" (click)="increaseQuantity()">
+        +
+      </button>
+    </div>
+    <div class="d-flex flex-row justify-content-between p-2" *ngIf="article.canTakeaway">
+      <span> Voulez-vous emporter ? </span>
+      <div class="ms-2">
+        <input type="checkbox" [(ngModel)]="basketItem.isTakeaway" />
+        {{ basketItem.isTakeaway ? 'Oui' : 'Non' }}
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-sm btn-primary" (click)="addArticleToBasket()">Valider</button>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="d-flex flex-row justify-content-between align-items-center">
+      <button class="btn btn-sm btn-primary" (click)="showBasketWindow()" *ngIf="!showBasket">Acheter</button>
+      <div class="p-0 m-0 text-end">
+        <span class="badge bg-dark">{{ article.price }} €</span>
+
+        <ng-template [ngIf]="article.canTakeaway">
+          • <span class="badge bg-secondary">A emporter</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

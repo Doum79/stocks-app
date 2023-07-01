@@ -1,0 +1,34 @@
+<div *ngIf="basket.length">
+  <div class="row border-bottom" *ngFor="let item of basket">
+    <div class="col-8">
+      <h1>{{ item.article.name }}</h1>
+      <p>{{ item.article.reference }}</p>
+    </div>
+    <div class="col-4">
+      <div>Quantité : x{{ item.quantity }}</div>
+      <div class="mt-1">Prix unitaire : {{ item.article.price }} €</div>
+      <div class="mt-1" *ngIf="item.article.canTakeaway">
+        A emporter : {{ item.isTakeaway ? "Oui" : "Non" }}
+      </div>
+      <div class="mt-1">Total HT : {{ getHT(item) }} €</div>
+      <div class="mt-1">Taux {{ getRate(item) }}% : {{ getRatePrice(item) }} €</div>
+      <div class="fw-bold mt-1">Total TTC : {{ getTTC(item) }} €</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 offset-8">
+      <h4>Totaux : {{ totals }} €</h4>
+    </div>
+  </div>
+
+  <div class="mt-2 mb-2">
+    <input type="text" class="form-control w-50" [(ngModel)]="clientFullName" placeholder="Entrer votre nom et prénoms" id="fullName" name="fullName" />
+  </div>
+
+  <button class="btn btn-primary mt-3" (click)="validateOrder()">Commander</button>
+</div>
+
+<div class="text-center mt-4 pt-5" *ngIf="!basket.length">
+  <h1>Votre panier est vide</h1>
+  <a [routerLink]="['']">Aller vers la page des articles</a>
+</div>
